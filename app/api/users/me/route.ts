@@ -2,18 +2,19 @@ export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
 import { api } from '../../api';
-import { cookies } from 'next/headers';
 import { logErrorResponse } from '../../_utils/utils';
 import { isAxiosError } from 'axios';
 
-export async function GET() {
-  try {
-    const cookieStore = await cookies();
+// Helper to get Authorization header from request
+const getAuthHeader = (request: Request) => {
+  const authHeader = request.headers.get('Authorization');
+  return authHeader ? { Authorization: authHeader } : {};
+};
 
+export async function GET(request: Request) {
+  try {
     const res = await api.get('/users/me', {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
+      headers: getAuthHeader(request),
     });
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
@@ -34,13 +35,10 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
   try {
-    const cookieStore = await cookies();
     const body = await request.json();
 
     const res = await api.patch('/users/me', body, {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
+      headers: getAuthHeader(request),
     });
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {

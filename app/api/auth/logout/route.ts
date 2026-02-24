@@ -8,29 +8,27 @@ export async function POST() {
   try {
     const cookieStore = await cookies();
 
-    const accessToken = cookieStore.get('accessToken')?.value;
-    const refreshToken = cookieStore.get('refreshToken')?.value;
-
+    // Send logout request with cookies (refreshToken needed for backend)
     await api.post('auth/logout', null, {
       headers: {
-        Cookie: `accessToken=${accessToken}; refreshToken=${refreshToken}`,
+        Cookie: cookieStore.toString(),
       },
     });
 
-    cookieStore.delete('accessToken');
+    // Clear cookies
     cookieStore.delete('refreshToken');
+    cookieStore.delete('sessionId');
 
-    return NextResponse.json(
-      { message: 'Logged out successfully' },
-      { status: 200 },
-    );
+    // Return 204 No Content (matching backend behavior)
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      return NextResponse.json(
-        { error: error.message, response: error.response?.data },
-        { status: error.status },
-      );
+      // Still clear cookies even if backend fails
+      const cookieStore = await cookies();
+      cookieStore.delete('refreshToken');
+      cookieStore.delete('sessionId');
+      return new NextResponse(null, { status: 204 });
     }
     logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(

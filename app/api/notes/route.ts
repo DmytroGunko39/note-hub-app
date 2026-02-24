@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { api } from '../api';
-import { cookies } from 'next/headers';
 import { isAxiosError } from 'axios';
 import { logErrorResponse } from '../_utils/utils';
 
+// Helper to get Authorization header from request
+const getAuthHeader = (request: NextRequest) => {
+  const authHeader = request.headers.get('Authorization');
+  return authHeader ? { Authorization: authHeader } : {};
+};
+
 export async function GET(request: NextRequest) {
   try {
-    const cookieStore = await cookies();
     const search = request.nextUrl.searchParams.get('search') ?? '';
     const page = Number(request.nextUrl.searchParams.get('page') ?? 1);
     const rawTag = request.nextUrl.searchParams.get('tag') ?? '';
@@ -19,9 +23,7 @@ export async function GET(request: NextRequest) {
         perPage: 12,
         ...(tag && { tag }),
       },
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
+      headers: getAuthHeader(request),
     });
 
     return NextResponse.json(res.data, { status: res.status });
@@ -43,15 +45,10 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const cookieStore = await cookies();
-
     const body = await request.json();
 
     const res = await api.post('/notes', body, {
-      headers: {
-        Cookie: cookieStore.toString(),
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeader(request),
     });
 
     return NextResponse.json(res.data, { status: res.status });

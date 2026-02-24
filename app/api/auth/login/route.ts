@@ -13,25 +13,30 @@ export async function POST(req: NextRequest) {
     const cookieStore = await cookies();
     const setCookie = apiRes.headers['set-cookie'];
 
+    // Set refreshToken cookie (from backend Set-Cookie header)
     if (setCookie) {
       const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
       for (const cookieStr of cookieArray) {
         const parsed = parse(cookieStr);
         const options = {
           expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
-          path: parsed.Path,
-          maxAge: Number(parsed['Max-Age']),
+          path: parsed.Path || '/',
+          maxAge: parsed['Max-Age'] ? Number(parsed['Max-Age']) : undefined,
+          httpOnly: true,
+          secure: true,
         };
-        if (parsed.accessToken)
-          cookieStore.set('accessToken', parsed.accessToken, options);
-        if (parsed.refreshToken)
+        // Only set refreshToken as cookie (accessToken comes in response body)
+        if (parsed.refreshToken) {
           cookieStore.set('refreshToken', parsed.refreshToken, options);
+        }
+        if (parsed.sessionId) {
+          cookieStore.set('sessionId', parsed.sessionId, options);
+        }
       }
-
-      return NextResponse.json(apiRes.data, { status: apiRes.status });
     }
 
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // Return response with accessToken in body (client stores in memory)
+    return NextResponse.json(apiRes.data, { status: apiRes.status });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);

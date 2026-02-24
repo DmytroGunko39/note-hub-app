@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { api } from '../../api';
-import { cookies } from 'next/headers';
 import { logErrorResponse } from '../../_utils/utils';
 import { isAxiosError } from 'axios';
 
@@ -8,14 +7,17 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
+// Helper to get Authorization header from request
+const getAuthHeader = (request: Request) => {
+  const authHeader = request.headers.get('Authorization');
+  return authHeader ? { Authorization: authHeader } : {};
+};
+
 export async function GET(request: Request, { params }: Props) {
   try {
-    const cookieStore = await cookies();
     const { id } = await params;
     const res = await api(`/notes/${id}`, {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
+      headers: getAuthHeader(request),
     });
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
@@ -36,15 +38,14 @@ export async function GET(request: Request, { params }: Props) {
 
 export async function DELETE(request: Request, { params }: Props) {
   try {
-    const cookieStore = await cookies();
     const { id } = await params;
 
-    const res = await api.delete(`/notes/${id}`, {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
+    await api.delete(`/notes/${id}`, {
+      headers: getAuthHeader(request),
     });
-    return NextResponse.json(res.data, { status: res.status });
+
+    // Return 204 No Content (matching backend behavior)
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
@@ -63,14 +64,11 @@ export async function DELETE(request: Request, { params }: Props) {
 
 export async function PATCH(request: Request, { params }: Props) {
   try {
-    const cookieStore = await cookies();
     const { id } = await params;
     const body = await request.json();
 
     const res = await api.patch(`/notes/${id}`, body, {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
+      headers: getAuthHeader(request),
     });
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
