@@ -1,10 +1,20 @@
 import { Note } from './note';
 
+// Generic wrapper for all API responses
+export interface ApiResponse<T> {
+  status: number;
+  message?: string;
+  data: T;
+}
+
 export interface FetchNotesResponse {
-  notes: Note[];
-  totalPages?: number;
+  data: Note[];
   page: number;
   perPage: number;
+  totalItems: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }
 
 export interface FetchNotesParams {
@@ -31,5 +41,4 @@ export type ForgotPasswordRequestData = {
 export type ResetPasswordRequestData = {
   token: string;
   password: string;
-  confirmPassword: string;
 };

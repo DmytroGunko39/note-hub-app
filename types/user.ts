@@ -1,7 +1,10 @@
 export type User = {
-  username: string;
+  _id: string;
   email: string;
-  avatar: string;
+  name?: string;
+  avatar: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 // 'https://ac.goit.global/fullstack/react/default-avatar.jpg'

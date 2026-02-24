@@ -1,7 +1,7 @@
 export type NoteTag = 'Work' | 'Personal' | 'Meeting' | 'Shopping' | 'Todo';
 
 export interface Note {
-  id: string;
+  _id: string;
   title: string;
   content: string;
   tag: NoteTag;
@@ -15,6 +15,5 @@ export interface NewNoteData {
   tag: NoteTag;
 }
 
-export interface DeleteNoteResponse {
-  success: boolean;
-}
+// DELETE /notes/:id returns 204 No Content (no response body)
+export type DeleteNoteResponse = void;
