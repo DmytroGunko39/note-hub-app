@@ -17,9 +17,19 @@ export default function ForgotPasswordPage() {
         setStatusMessage(
           "If an account exists for that email, we've sent a reset link.",
         );
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('Failed to request password reset', error);
-        setStatusMessage('Could not send reset link. Please try again later.');
+        // Extract error message from backend response if available
+        const axiosError = error as {
+          response?: {
+            data?: { response?: { message?: string }; error?: string };
+          };
+        };
+        const backendMessage =
+          axiosError?.response?.data?.response?.message ||
+          axiosError?.response?.data?.error ||
+          'Could not send reset link. Please try again later.';
+        setStatusMessage(backendMessage);
       }
     });
   };

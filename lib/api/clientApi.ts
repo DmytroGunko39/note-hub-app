@@ -71,9 +71,14 @@ export const registerUser = async (
   return res.data.data;
 };
 
-export const refreshSession = async (): Promise<LoginResponse> => {
-  const res = await api.get<ApiResponse<LoginResponse>>('/auth/session');
-  return res.data.data;
+export const refreshSession = async (): Promise<LoginResponse | null> => {
+  try {
+    const res = await api.get<ApiResponse<LoginResponse>>('/auth/session');
+    return res.data.data;
+  } catch {
+    // No session (401) or other error - return null instead of throwing
+    return null;
+  }
 };
 
 export const getMe = async (): Promise<User> => {

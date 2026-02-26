@@ -31,8 +31,15 @@ export default function ResetPasswordPage() {
       const password = formData.get('password') as string;
       const confirmPassword = formData.get('confirmPassword') as string;
 
+      // Validate passwords match on frontend (don't send confirmPassword to backend)
+      if (password !== confirmPassword) {
+        setError('Passwords do not match.');
+        return;
+      }
+
       try {
-        await resetPassword({ token, password, confirmPassword });
+        // Only send token and password to backend
+        await resetPassword({ token, password });
         router.push('/sign-in?reset=success');
       } catch (err) {
         console.error('Password reset failed', err);
