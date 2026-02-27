@@ -12,15 +12,20 @@ export default function SignInPage() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const setAuth = useAuthStore((state) => state.setUser);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const setUser = useAuthStore((state) => state.setUser);
   const passwordResetSuccess = searchParams.get('reset') === 'success';
 
   const handleSignIn = async (formData: FormData) => {
     try {
       const data = Object.fromEntries(formData) as LoginRequestData;
-      const user = await loginUser(data);
-      if (user) {
-        setAuth(user);
+      const response = await loginUser(data);
+
+      if (response) {
+        // Store accessToken in Zustand (used by Axios interceptor)
+        setAccessToken(response.accessToken);
+        // Store user data
+        setUser(response.user);
         router.push('/profile');
       }
     } catch (err) {
