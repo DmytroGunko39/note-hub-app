@@ -43,7 +43,7 @@ export default function NotesClient({ initialData, tag }: NoteClientProps) {
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <h2>Failed to load notes</h2>;
 
-  const notesToDisplay = data?.notes || [];
+  const notesToDisplay = data?.data || [];
   const totalPages = data?.totalPages || 1;
 
   return (
