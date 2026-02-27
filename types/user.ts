@@ -6,5 +6,3 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
-
-// 'https://ac.goit.global/fullstack/react/default-avatar.jpg'
