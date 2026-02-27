@@ -8,11 +8,11 @@ import { useRouter } from 'next/navigation';
 
 const AuthNavigation = () => {
   const router = useRouter();
-  const { isAuthenticated, user, clearIsAuthenticated } = useAuthStore();
+  const { isAuthenticated, user, clearAuth } = useAuthStore();
 
   const handleLogout = async () => {
     await logOutUser();
-    clearIsAuthenticated();
+    clearAuth();
     router.replace('/sign-in');
   };
   return (
