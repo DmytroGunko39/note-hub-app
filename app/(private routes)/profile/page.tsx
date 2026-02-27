@@ -52,15 +52,15 @@ const Profile = async () => {
         </div>
         <div className={css.avatarWrapper}>
           <Image
-            src={user.avatar}
-            alt={`${user.username} Avatar`}
+            src={user.avatar || '/default-avatar.png'}
+            alt={`${user.name}'s Avatar`}
             width={120}
             height={120}
             className={css.avatar}
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Username: {user.username}</p>
+          <p>Username: {user.name}</p>
           <p>Email: {user.email}</p>
         </div>
       </div>

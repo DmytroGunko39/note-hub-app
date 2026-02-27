@@ -17,7 +17,7 @@ export default function EditUser() {
   useEffect(() => {
     getMe().then((user: User) => {
       setUser(user);
-      setUserName(user.username ?? '');
+      setUserName(user.name ?? '');
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -29,8 +29,8 @@ export default function EditUser() {
   const handleSaveUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      if (user && username !== user.username) {
-        const updated = await updateMe({ username });
+      if (user && username !== user.name) {
+        const updated = await updateMe({ name: username });
         setUser(updated);
         setSaveMessage('Data saved successfully!');
         setTimeout(() => {
@@ -43,7 +43,7 @@ export default function EditUser() {
   };
 
   const handleCancel = () => {
-    setUserName(user?.username ?? '');
+    setUserName(user?.name ?? '');
     router.push('/profile');
   };
 
@@ -64,8 +64,8 @@ export default function EditUser() {
         <h1 className={css.formTitle}>Edit Profile</h1>
 
         <Image
-          src={user.avatar}
-          alt={`${user.avatar} Avatar`}
+          src={user.avatar || '/default-avatar.png'}
+          alt={`${user.name}'s Avatar`}
           width={120}
           height={120}
           className={css.avatar}
