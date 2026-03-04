@@ -3,10 +3,12 @@
 import css from '@/components/NoteDetailsClient/NoteDetailsClient.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api/clientApi';
-import { useParams } from 'next/navigation';
 
-const NoteDetailsClient = () => {
-  const { id } = useParams<{ id: string }>();
+interface NoteDetailsClientProps {
+  id: string;
+}
+
+const NoteDetailsClient = ({ id }: NoteDetailsClientProps) => {
   const {
     data: note,
     isLoading,
@@ -15,6 +17,7 @@ const NoteDetailsClient = () => {
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
+    enabled: !!id,
   });
 
   if (isLoading) {

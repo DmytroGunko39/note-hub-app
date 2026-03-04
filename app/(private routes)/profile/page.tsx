@@ -1,34 +1,45 @@
+'use client';
+
 import Image from 'next/image';
 import css from './ProfilePage.module.css';
-import type { Metadata } from 'next';
-import { getMeServer } from '@/lib/api/serverApi';
 import Link from 'next/link';
+import { useAuthStore } from '@/lib/store/authStore';
+import { useEffect, useState } from 'react';
+import { getMe } from '@/lib/api/clientApi';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export default function Profile() {
+  const { user, setUser } = useAuthStore();
+  const [loading, setLoading] = useState(true);
 
-export const metadata: Metadata = {
-  title: 'Profile Rage - NoteHub',
-  description: 'User profile page with account details.',
-  robots: { index: false, follow: false },
-  openGraph: {
-    title: 'Profile Page',
-    description: 'View and manage your NoteHub profile.',
-    url: '/profile',
-    type: 'profile',
-    images: [
-      {
-        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'User Profile - NoteHub',
-      },
-    ],
-  },
-};
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getMe();
+        setUser(userData);
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-const Profile = async () => {
-  const user = await getMeServer();
+    if (!user) {
+      fetchUser();
+    } else {
+      setLoading(false);
+    }
+  }, [user, setUser]);
+
+  if (loading) {
+    return (
+      <main className={css.mainContent}>
+        <div className={css.profileCard}>
+          <h1 className={css.formTitle}>Profile Page</h1>
+          <p>Loading...</p>
+        </div>
+      </main>
+    );
+  }
 
   if (!user) {
     return (
@@ -66,6 +77,4 @@ const Profile = async () => {
       </div>
     </main>
   );
-};
-
-export default Profile;
+}

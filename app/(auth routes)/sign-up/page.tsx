@@ -3,25 +3,22 @@
 import { registerUser } from '@/lib/api/clientApi';
 import css from './SignUpPage.module.css';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/lib/store/authStore';
 import axios from 'axios';
 import { useState } from 'react';
 import { RegisterRequestData } from '@/types/types';
 
 export default function SignUpPage() {
   const router = useRouter();
-  const setAuth = useAuthStore((state) => state.setUser);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const handleSignUp = async (formData: FormData) => {
     const data = Object.fromEntries(formData) as RegisterRequestData;
 
     try {
       setErrorMessage(null);
-      const user = await registerUser(data);
-      if (user) {
-        setAuth(user);
-        router.push('/profile');
-      }
+      await registerUser(data);
+      // Registration successful - redirect to sign-in
+      // Backend doesn't return tokens on register, user must log in
+      router.push('/sign-in');
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
         setErrorMessage('Такий користувач вже існує');
