@@ -24,7 +24,7 @@ export const fetchNotes = async ({
   search = '',
   tag,
 }: FetchNotesParams = {}): Promise<FetchNotesResponse> => {
-  const res = await api.get<ApiResponse<FetchNotesResponse>>('/notes', {
+  const res = await api.get<FetchNotesResponse>('/notes', {
     params: {
       page,
       perPage,
@@ -33,7 +33,9 @@ export const fetchNotes = async ({
     },
   });
 
-  return res.data.data;
+  // API route returns the full response object directly
+  // { status, message, data: [...notes], page, perPage, totalPages, ... }
+  return res.data;
 };
 
 export const createNote = async (notesData: NewNoteData): Promise<Note> => {

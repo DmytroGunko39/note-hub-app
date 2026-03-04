@@ -8,6 +8,8 @@ export interface ApiResponse<T> {
 }
 
 export interface FetchNotesResponse {
+  status: number;
+  message: string;
   data: Note[];
   page: number;
   perPage: number;

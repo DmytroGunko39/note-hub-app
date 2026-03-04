@@ -2,13 +2,14 @@
 
 import { refreshSession, getMe } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const AuthProvider = ({ children }: Props) => {
+  const [isInitialized, setIsInitialized] = useState(false);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setUser = useAuthStore((state) => state.setUser);
   const clearAuth = useAuthStore((state) => state.clearAuth);
@@ -34,11 +35,19 @@ const AuthProvider = ({ children }: Props) => {
       } catch (error) {
         console.error('Auth initialization failed:', error);
         clearAuth();
+      } finally {
+        // Mark as initialized regardless of success/failure
+        setIsInitialized(true);
       }
     };
 
     initAuth();
   }, [setAccessToken, setUser, clearAuth]);
+
+  // Don't render children until auth is initialized
+  if (!isInitialized) {
+    return null;
+  }
 
   return children;
 };
