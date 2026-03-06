@@ -74,13 +74,9 @@ export const registerUser = async (
 };
 
 export const refreshSession = async (): Promise<LoginResponse | null> => {
-  try {
-    const res = await api.get<ApiResponse<LoginResponse>>('/auth/session');
-    return res.data.data;
-  } catch {
-    // No session (401) or other error - return null instead of throwing
-    return null;
-  }
+  // Interceptor handles 401 gracefully - returns { data: null } instead of throwing
+  const res = await api.get<ApiResponse<LoginResponse>>('/auth/session');
+  return res.data.data ?? null;
 };
 
 export const getMe = async (): Promise<User> => {

@@ -12,14 +12,24 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchUser = async () => {
       try {
         const userData = await getMe();
-        setUser(userData);
+        // Only update state if component is still mounted
+        if (isMounted) {
+          setUser(userData);
+        }
       } catch (error) {
-        console.error('Failed to fetch user:', error);
+        // Only log error if component is still mounted (not during logout)
+        if (isMounted) {
+          console.error('Failed to fetch user:', error);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -28,6 +38,11 @@ export default function Profile() {
     } else {
       setLoading(false);
     }
+
+    // Cleanup: prevent state updates after unmount (e.g., during logout)
+    return () => {
+      isMounted = false;
+    };
   }, [user, setUser]);
 
   if (loading) {
