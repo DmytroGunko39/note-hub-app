@@ -44,9 +44,36 @@ const AuthProvider = ({ children }: Props) => {
     initAuth();
   }, [setAccessToken, setUser, clearAuth]);
 
-  // Don't render children until auth is initialized
+  // Show loading state while auth initializes
   if (!isInitialized) {
-    return null;
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#f8f9fa',
+        }}
+      >
+        <div
+          style={{
+            width: '40px',
+            height: '40px',
+            border: '4px solid #e9ecef',
+            borderTop: '4px solid #0d6efd',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+          }}
+        />
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
   }
 
   return children;
