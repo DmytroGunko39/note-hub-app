@@ -22,9 +22,7 @@ export default function SignInPage() {
       const response = await loginUser(data);
 
       if (response) {
-        // Store accessToken in Zustand (used by Axios interceptor)
         setAccessToken(response.accessToken);
-        // Store user data
         setUser(response.user);
         router.push('/profile');
       }
