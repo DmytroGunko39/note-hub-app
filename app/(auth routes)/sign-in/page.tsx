@@ -37,45 +37,52 @@ export default function SignInPage() {
 
   return (
     <main className={css.mainContent}>
-      <form className={css.form} action={handleSignIn}>
+      <div className={css.card}>
         <h1 className={css.formTitle}>Sign in</h1>
 
-        <div className={css.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            className={css.input}
-            required
-          />
-        </div>
+        <form className={css.form} action={handleSignIn}>
+          <div className={css.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              className={css.input}
+              required
+            />
+          </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            className={css.input}
-            required
-          />
-        </div>
+          <div className={css.formGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              className={css.input}
+              required
+            />
+          </div>
 
-        <div className={css.actions}>
-          <button type="submit" className={css.submitButton}>
-            Log in
-          </button>
-          <Link href="/forgot-password" className={css.forgotLink}>
-            Forgot password?
-          </Link>
-        </div>
+          <div className={css.actions}>
+            <button type="submit" className={css.submitButton}>
+              Log in
+            </button>
+            <Link href="/forgot-password" className={css.forgotLink}>
+              Forgot password?
+            </Link>
+          </div>
 
-        {passwordResetSuccess && (
-          <p className={css.success}>Password updated. Please sign in.</p>
-        )}
-        <p className={css.error}>{error}</p>
-      </form>
+          {passwordResetSuccess && (
+            <p className={css.success}>Password updated. Please sign in.</p>
+          )}
+          {error && <p className={css.error}>{error}</p>}
+        </form>
+
+        <p className={css.switchAuth}>
+          Don&apos;t have an account?{' '}
+          <Link href="/sign-up" className={css.switchLink}>Sign up</Link>
+        </p>
+      </div>
     </main>
   );
 }

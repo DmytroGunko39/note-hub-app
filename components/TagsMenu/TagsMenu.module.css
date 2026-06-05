@@ -1,55 +1,88 @@
 .menuContainer {
   position: relative;
-  display: inline-block;
 }
 
 .menuButton {
-  background-color: #f5f5f5;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 8px 16px;
-  font-size: 16px;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
   cursor: pointer;
+  white-space: nowrap;
   transition:
-    background-color 0.3s ease,
-    box-shadow 0.2s ease;
+    color      var(--ease-fast),
+    background var(--ease-fast);
 }
 
 .menuButton:hover {
-  background-color: #eaeaea;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .menuList {
   position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background-color: #333;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 6px 0;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 168px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2) 0;
   margin: 0;
   list-style: none;
-  /* min-width: 150px; */
-  z-index: 1000;
+  z-index: 200;
+  animation: dropIn var(--ease-base) both;
+}
+
+@keyframes dropIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .menuItem {
   margin: 0;
 }
 
+.menuItem:first-child {
+  padding-bottom: var(--space-1);
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.menuItem:first-child .menuLink {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
 .menuLink {
-  display: block;
-  padding: 8px 16px;
-  color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  color: var(--color-text-secondary);
   text-decoration: none;
-  font-size: 15px;
-  transition: background-color 0.2s ease;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition:
+    color      var(--ease-fast),
+    background var(--ease-fast);
 }
 
 .menuLink:hover {
-  background-color: #f0f0f0;
-  color: #333;
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.05);
 }

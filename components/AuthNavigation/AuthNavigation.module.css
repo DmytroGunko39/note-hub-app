@@ -1,38 +1,137 @@
-.userEmail {
-  color: white;
-  margin-right: 0.5rem;
-  font-size: 0.9rem;
+.group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.profileLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: background var(--ease-fast);
+}
+
+.profileLink:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.35);
+  transition: box-shadow var(--ease-fast);
+}
+
+.profileLink:hover .avatar {
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.6);
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-full);
+}
+
+.avatarInitials {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.email {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: none;
+  transition: color var(--ease-fast);
+}
+
+.profileLink:hover .email {
+  color: var(--color-text-primary);
 }
 
 .logoutButton {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
   background: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
   cursor: pointer;
-  font-size: 0.9rem;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    color        var(--ease-fast),
+    border-color var(--ease-fast),
+    background   var(--ease-fast);
 }
 
 .logoutButton:hover {
-  background-color: white;
-  color: #333;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+  background: var(--color-danger-subtle);
 }
 
-.navigationItem {
-  display: flex;
-  align-items: center;
-}
-
-.navigationLink {
+.loginLink {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
   text-decoration: none;
-  color: white;
-  font-size: 1rem;
+  transition:
+    color        var(--ease-fast),
+    border-color var(--ease-fast),
+    background   var(--ease-fast);
 }
 
-.navigationLink:hover {
-  color: #ddd;
+.loginLink:hover {
+  color: var(--color-text-primary);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.signUpLink {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background   var(--ease-fast),
+    border-color var(--ease-fast),
+    box-shadow   var(--ease-base);
+}
+
+.signUpLink:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  box-shadow: 0 0 0 3px var(--color-accent-subtle);
+}
+
+@media (min-width: 769px) {
+  .email {
+    display: block;
+  }
 }

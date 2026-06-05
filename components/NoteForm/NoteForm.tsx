@@ -7,6 +7,15 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { createNote } from '@/lib/api/clientApi';
 import { useDraftNote } from '@/lib/store/noteStore';
 import { ChangeEvent } from 'react';
+import CustomSelect from '@/components/CustomSelect/CustomSelect';
+
+const TAG_OPTIONS = [
+  { value: 'Todo',     label: 'Todo'     },
+  { value: 'Work',     label: 'Work'     },
+  { value: 'Personal', label: 'Personal' },
+  { value: 'Meeting',  label: 'Meeting'  },
+  { value: 'Shopping', label: 'Shopping' },
+];
 
 export interface NoteFormProps {
   initialValues?: {
@@ -90,20 +99,14 @@ export default function NoteForm({
       <div className={css.formGroup}>
         <label htmlFor="tag">Tag</label>
 
-        <select
+        <CustomSelect
           id="tag"
           name="tag"
-          className={css.select}
           defaultValue={initialValues?.tag ?? draft.tag ?? 'Todo'}
           required
+          options={TAG_OPTIONS}
           onChange={handleChange}
-        >
-          <option value="Todo">Todo</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Meeting">Meeting</option>
-          <option value="Shopping">Shopping</option>
-        </select>
+        />
         {serverErrors?.tag && (
           <span className={css.error}>{serverErrors.tag}</span>
         )}
