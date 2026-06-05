@@ -50,10 +50,15 @@ export async function GET() {
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      return NextResponse.json(
+      const res = NextResponse.json(
         { error: 'Session refresh failed' },
         { status: error.response?.status || 401 },
       );
+      // The refreshToken is invalid/expired — delete it so middleware
+      // stops redirecting the user away from /sign-in and /sign-up
+      res.cookies.delete('refreshToken');
+      res.cookies.delete('sessionId');
+      return res;
     }
     logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(

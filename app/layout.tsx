@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Roboto } from 'next/font/google';
 import './globals.css';
+
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     title: 'My Notes App',
     description:
       'A simple notes application built with Next.js and TanStack Query',
-    url: 'https://07-routing-nextjs-sage.vercel.app/',
+    url: 'https://09-auth-kappa-lyart.vercel.app/',
     images: [
       {
         url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
