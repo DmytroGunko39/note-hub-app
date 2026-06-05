@@ -54,6 +54,12 @@
   --container-px:   1.25rem;
 }
 
+@media (min-width: 1025px) {
+  :root {
+    --container-px: 2rem;
+  }
+}
+
 *,
 *::before,
 *::after {

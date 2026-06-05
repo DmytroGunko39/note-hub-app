@@ -221,8 +221,4 @@
   .inner {
     gap: var(--space-6);
   }
-
-  :root {
-    --container-px: 2rem;
-  }
 }
