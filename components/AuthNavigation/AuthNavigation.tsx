@@ -18,13 +18,18 @@ const getInitials = (user: User): string => {
 
 const AuthNavigation = () => {
   const router = useRouter();
-  const { isAuthenticated, user, clearAuth } = useAuthStore();
+  const { isInitialized, isAuthenticated, user, clearAuth } = useAuthStore();
 
   const handleLogout = async () => {
     await logOutUser();
     clearAuth();
     router.replace('/sign-in');
   };
+
+  // Reserve the buttons' space while the session check runs
+  if (!isInitialized) {
+    return <div className={css.placeholder} aria-hidden="true" />;
+  }
 
   if (isAuthenticated && user) {
     return (

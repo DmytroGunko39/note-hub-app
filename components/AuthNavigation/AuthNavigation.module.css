@@ -130,6 +130,14 @@
   box-shadow: 0 0 0 3px var(--color-accent-subtle);
 }
 
+/* Same box as the "Log in" + "Sign up" group, shown while the session check runs */
+.placeholder {
+  visibility: hidden;
+  flex-shrink: 0;
+  width: 144px;
+  height: 34px;
+}
+
 @media (min-width: 769px) {
   .email {
     display: block;

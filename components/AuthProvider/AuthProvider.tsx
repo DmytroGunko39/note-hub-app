@@ -2,7 +2,7 @@
 
 import { refreshSession, getMe } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Loader from '../Loader/Loader';
 
 type Props = {
@@ -10,7 +10,8 @@ type Props = {
 };
 
 const AuthProvider = ({ children }: Props) => {
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isInitialized = useAuthStore((state) => state.isInitialized);
+  const setInitialized = useAuthStore((state) => state.setInitialized);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setUser = useAuthStore((state) => state.setUser);
   const clearAuth = useAuthStore((state) => state.clearAuth);
@@ -38,12 +39,12 @@ const AuthProvider = ({ children }: Props) => {
         clearAuth();
       } finally {
         // Mark as initialized regardless of success/failure
-        setIsInitialized(true);
+        setInitialized(true);
       }
     };
 
     initAuth();
-  }, [setAccessToken, setUser, clearAuth]);
+  }, [setAccessToken, setUser, clearAuth, setInitialized]);
 
   // Show loading state while auth initializes (rendered inside <main>)
   if (!isInitialized) {
