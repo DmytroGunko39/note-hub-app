@@ -43,22 +43,6 @@
   opacity: 0.85;
 }
 
-.logoMark {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: #fff;
-  flex-shrink: 0;
-  letter-spacing: -0.5px;
-  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.4);
-}
-
 .logoName {
   font-size: var(--text-lg);
   font-weight: 600;

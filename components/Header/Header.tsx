@@ -3,6 +3,7 @@ import css from './Header.module.css';
 import Link from 'next/link';
 import TagsMenu from '../TagsMenu/TagsMenu';
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
+import Logo from '../Logo/Logo';
 import { useState, useEffect } from 'react';
 
 const Header = () => {
@@ -34,7 +35,7 @@ const Header = () => {
     <header className={`${css.header} ${scrolled ? css.scrolled : ''}`}>
       <div className={css.inner}>
         <Link href="/" className={css.logo} aria-label="NoteHub home">
-          <span className={css.logoMark} aria-hidden="true">N</span>
+          <Logo size={28} />
           <span className={css.logoName}>NoteHub</span>
         </Link>
 
