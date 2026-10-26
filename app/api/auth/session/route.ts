@@ -11,7 +11,8 @@ export async function GET() {
     const refreshToken = cookieStore.get('refreshToken')?.value;
 
     if (!refreshToken) {
-      return NextResponse.json({ error: 'No refresh token' }, { status: 401 });
+      // Not logged in is a normal state, not an error: empty 200 response
+      return new NextResponse(null, { status: 200 });
     }
 
     // Call backend to refresh tokens using refreshToken cookie
@@ -50,15 +51,22 @@ export async function GET() {
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      const res = NextResponse.json(
-        { error: 'Session refresh failed' },
-        { status: error.response?.status || 401 },
-      );
-      // The refreshToken is invalid/expired — delete it so middleware
+      const status = error.response?.status;
+
+      // Invalid/expired session (or backend unreachable without a response
+      // status) is "not authenticated": clear stale cookies so middleware
       // stops redirecting the user away from /sign-in and /sign-up
-      res.cookies.delete('refreshToken');
-      res.cookies.delete('sessionId');
-      return res;
+      if (!status || status === 400 || status === 401 || status === 403) {
+        const res = new NextResponse(null, { status: 200 });
+        res.cookies.delete('refreshToken');
+        res.cookies.delete('sessionId');
+        return res;
+      }
+
+      return NextResponse.json(
+        { error: 'Session refresh failed' },
+        { status },
+      );
     }
     logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(

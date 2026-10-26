@@ -74,8 +74,9 @@ export const registerUser = async (
 };
 
 export const refreshSession = async (): Promise<LoginResponse | null> => {
-  // Interceptor handles 401 gracefully - returns { data: null } instead of throwing
-  const res = await api.get<ApiResponse<LoginResponse>>('/auth/session');
+  // BFF returns 200 with an empty body when there is no valid session
+  const res = await api.get<ApiResponse<LoginResponse> | ''>('/auth/session');
+  if (!res.data) return null;
   return res.data.data ?? null;
 };
 
