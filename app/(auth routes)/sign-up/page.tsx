@@ -21,9 +21,9 @@ export default function SignUpPage() {
       router.push('/sign-in');
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
-        setErrorMessage('Такий користувач вже існує');
+        setErrorMessage('A user with this email already exists');
       } else {
-        setErrorMessage('Невідома помилка');
+        setErrorMessage('Unknown error');
       }
     }
   };
@@ -67,7 +67,9 @@ export default function SignUpPage() {
 
         <p className={css.switchAuth}>
           Already have an account?{' '}
-          <Link href="/sign-in" className={css.switchLink}>Sign in</Link>
+          <Link href="/sign-in" className={css.switchLink}>
+            Sign in
+          </Link>
         </p>
       </div>
     </main>
