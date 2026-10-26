@@ -15,13 +15,13 @@ export default function ResetPasswordPage() {
 
   if (!token) {
     return (
-      <main className={css.mainContent}>
+      <div className={css.mainContent}>
         <div className={css.errorCard}>
           <h1>Invalid reset link</h1>
           <p>The password reset link is missing or invalid.</p>
           <Link href="/forgot-password">Request a new link</Link>
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -49,7 +49,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <main className={css.mainContent}>
+    <div className={css.mainContent}>
       <form className={css.form} action={handleSubmit}>
         <h1 className={css.formTitle}>Choose a new password</h1>
         <p className={css.description}>
@@ -93,6 +93,6 @@ export default function ResetPasswordPage() {
           <Link href="/sign-in">Back to sign in</Link>
         </p>
       </form>
-    </main>
+    </div>
   );
 }

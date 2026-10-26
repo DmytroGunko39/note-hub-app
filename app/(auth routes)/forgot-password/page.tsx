@@ -35,7 +35,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <main className={css.mainContent}>
+    <div className={css.mainContent}>
       <form className={css.form} action={handleSubmit}>
         <h1 className={css.formTitle}>Reset your password</h1>
         <p className={css.description}>
@@ -64,6 +64,6 @@ export default function ForgotPasswordPage() {
           <Link href="/sign-in">Back to sign in</Link>
         </p>
       </form>
-    </main>
+    </div>
   );
 }

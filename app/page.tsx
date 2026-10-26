@@ -55,7 +55,7 @@ const features = [
 
 const Home = () => {
   return (
-    <main className={css.main}>
+    <div className={css.main}>
       <section className={css.hero}>
         <div className={css.heroBg} aria-hidden="true" />
         <div className={css.heroContent}>
@@ -83,7 +83,7 @@ const Home = () => {
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

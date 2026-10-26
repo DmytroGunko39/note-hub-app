@@ -1,0 +1,7 @@
+/* Grows to fill the space between Header and Footer so the footer sits at the
+   bottom on short pages; flex column lets page roots with flex: 1 fill it too */
+.main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}

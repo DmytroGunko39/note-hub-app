@@ -29,7 +29,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className={css.mainContent}>
+    <div className={css.mainContent}>
       <div className={css.card}>
         <h1 className={css.formTitle}>Sign up</h1>
 
@@ -72,6 +72,6 @@ export default function SignUpPage() {
           </Link>
         </p>
       </div>
-    </main>
+    </div>
   );
 }

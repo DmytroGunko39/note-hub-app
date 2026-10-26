@@ -47,28 +47,28 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <main className={css.mainContent}>
+      <div className={css.mainContent}>
         <div className={css.profileCard}>
           <h1 className={css.formTitle}>Profile Page</h1>
           <p>Loading...</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   if (!user) {
     return (
-      <main className={css.mainContent}>
+      <div className={css.mainContent}>
         <div className={css.profileCard}>
           <h1 className={css.formTitle}>Profile Page</h1>
           <p>User data could not be loaded.</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className={css.mainContent}>
+    <div className={css.mainContent}>
       <div className={css.profileCard}>
         <div className={css.header}>
           <h1 className={css.formTitle}>Profile Page</h1>
@@ -90,6 +90,6 @@ export default function Profile() {
           <p>Email: {user.email}</p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

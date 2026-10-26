@@ -36,7 +36,7 @@ export default function SignInPage() {
   };
 
   return (
-    <main className={css.mainContent}>
+    <div className={css.mainContent}>
       <div className={css.card}>
         <h1 className={css.formTitle}>Sign in</h1>
 
@@ -83,6 +83,6 @@ export default function SignInPage() {
           <Link href="/sign-up" className={css.switchLink}>Sign up</Link>
         </p>
       </div>
-    </main>
+    </div>
   );
 }

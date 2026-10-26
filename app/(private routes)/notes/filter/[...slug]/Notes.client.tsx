@@ -59,7 +59,7 @@ export default function NotesClient({ tag }: NoteClientProps) {
 
   return (
     <div className={css.app}>
-      <main>
+      <div>
         <section>
           <header className={css.toolbar}>
             <SearchBox value={searchTopic} onSearch={updateSearchTopic} />
@@ -76,7 +76,7 @@ export default function NotesClient({ tag }: NoteClientProps) {
           </header>
           {data && !isLoading && <NoteList notes={notesToDisplay} />}
         </section>
-      </main>
+      </div>
     </div>
   );
 }

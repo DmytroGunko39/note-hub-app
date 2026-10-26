@@ -49,17 +49,17 @@ export default function EditUser() {
 
   if (!user) {
     return (
-      <main className={css.mainContent}>
+      <div className={css.mainContent}>
         <div className={css.profileCard}>
           <h1 className={css.formTitle}>Profile Page</h1>
           <p>User data could not be loaded.</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className={css.mainContent}>
+    <div className={css.mainContent}>
       <div className={css.profileCard}>
         <h1 className={css.formTitle}>Edit Profile</h1>
 
@@ -101,6 +101,6 @@ export default function EditUser() {
           </div>
         </form>
       </div>
-    </main>
+    </div>
   );
 }
